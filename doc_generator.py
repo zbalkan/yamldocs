@@ -7,14 +7,15 @@ from genson import SchemaBuilder
 from json_schema_for_humans.generate import generate_from_filename
 from json_schema_for_humans.generation_configuration import GenerationConfiguration
 
-from configuration import CONFIG_JSON, CONFIG_YML, DOCS_PATH, SCHEMA_PATH, VERBOSE
+from annotations import DESCRIPTION, TITLE
+from configuration import CONFIG_JSON, CONFIG_YML, DOCS_PATH, SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE
 
 
 def main() -> None:
     yml_to_json(CONFIG_YML, CONFIG_JSON, VERBOSE)
 
     generate_json_schema(CONFIG_JSON,
-                         SCHEMA_PATH, VERBOSE)
+                         SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE)
 
     generate_docs(SCHEMA_PATH, DOCS_PATH, VERBOSE)
 
@@ -29,7 +30,7 @@ def generate_docs(inputPath: str, outputPath: str, verbose: bool = False) -> Non
         print("Saved docs to path: " + outputPath)
 
 
-def generate_json_schema(inputPath: str, outputPath: str, verbose: bool = False) -> None:
+def generate_json_schema(inputPath: str, outputPath: str, useAnnotations: bool = False, verbose: bool = False) -> None:
 
     if (verbose):
         print("Loading JSON file from path: " + inputPath)
@@ -42,6 +43,12 @@ def generate_json_schema(inputPath: str, outputPath: str, verbose: bool = False)
     builder: SchemaBuilder = SchemaBuilder()
     builder.add_object(jsonObj)
     schema: dict = builder.to_schema()
+
+    if (useAnnotations):
+        schema["title"] = TITLE
+        schema["description"] = DESCRIPTION
+
+    
 
     with open(outputPath, 'w') as json_file:
         json.dump(schema, json_file, indent=4)
