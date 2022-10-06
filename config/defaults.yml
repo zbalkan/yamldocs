@@ -1,7 +1,4 @@
 ---
-meta: |
-  'The default configuration for opensearch.yml'
-
 defaults:
   action:
     auto_create_index: 'true'
