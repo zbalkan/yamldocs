@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import argparse
 import json
 import os
 import sys
@@ -11,16 +12,41 @@ from json_schema_for_humans.generate import generate_from_filename
 from json_schema_for_humans.generation_configuration import GenerationConfiguration
 
 from annotations import DESCRIPTION, TITLE
-from configuration import CONFIG_JSON, CONFIG_YML, DOCS_PATH, SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE
+from configuration import CONFIG_JSON, CONFIG_YML, DOCS_PATH, SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE, DESCRIPTION_PLACEHOLDER
 
 
 def main() -> None:
-    yml_to_json(CONFIG_YML, CONFIG_JSON, VERBOSE)
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(
+        description="Generate documentation for yaml.")
+    if (len(sys.argv)) == 1:
+        parser.print_help()
 
-    generate_json_schema(CONFIG_JSON,
-                         SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE)
+    parser.add_argument("-p", "--preview",
+                        dest="preview",
+                        action='store_true',
+                        required=False,
+                        help="Generates documentation from YAML with description placeholders.")
+    parser.add_argument("-s", "--schema",
+                        dest="schema",
+                        action='store_true',
+                        required=False,
+                        help="Generates schema from YAML with description placeholders.")
+    parser.add_argument("-d", "--docs",
+                        dest="docs",
+                        action='store_true',
+                        required=False,
+                        help="Generates docs from schema.")
 
-    generate_docs(SCHEMA_PATH, DOCS_PATH, VERBOSE)
+    args: argparse.Namespace = parser.parse_args()
+
+    if (args.preview is True or args.schema is True):
+        yml_to_json(CONFIG_YML, CONFIG_JSON, VERBOSE)
+
+        generate_json_schema(CONFIG_JSON,
+                             SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE)
+
+    if (args.preview is True or args.docs is True):
+        generate_docs(SCHEMA_PATH, DOCS_PATH, VERBOSE)
 
 
 def generate_docs(inputPath: str, outputPath: str, verbose: bool = False) -> None:
@@ -62,7 +88,7 @@ def generate_json_schema(inputPath: str, outputPath: str, useAnnotations: bool =
 
 def add_description_property(d: dict) -> None:
     if ("type" in d):
-        d["description"] = "# Description title\n\nDescription placeholder with *bold* and _italic_ text. This is a `code snippet`."
+        d["description"] = DESCRIPTION_PLACEHOLDER
     for key, value in d.items():
         if (type(value) == dict):
             add_description_property(value)
