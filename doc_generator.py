@@ -42,8 +42,10 @@ def main() -> None:
     if (args.preview is True or args.schema is True):
         yml_to_json(CONFIG_YML, CONFIG_JSON, VERBOSE)
 
+        addDescriptionPlaceholder : bool = (args.preview is True)
+
         generate_json_schema(CONFIG_JSON,
-                             SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE)
+                             SCHEMA_PATH, addDescriptionPlaceholder, USE_ANNOTATIONS, VERBOSE)
 
     if (args.preview is True or args.docs is True):
         generate_docs(SCHEMA_PATH, DOCS_PATH, VERBOSE)
@@ -59,7 +61,7 @@ def generate_docs(inputPath: str, outputPath: str, verbose: bool = False) -> Non
         print("Saved docs to path: " + outputPath)
 
 
-def generate_json_schema(inputPath: str, outputPath: str, useAnnotations: bool = False, verbose: bool = False) -> None:
+def generate_json_schema(inputPath: str, outputPath: str, addDescriptionPlaceholder : bool = False, useAnnotations: bool = False, verbose: bool = False) -> None:
 
     if (verbose):
         print("Loading JSON file from path: " + inputPath)
@@ -73,7 +75,8 @@ def generate_json_schema(inputPath: str, outputPath: str, useAnnotations: bool =
     builder.add_object(jsonObj)
     schema: dict = builder.to_schema()
 
-    add_description_property(schema)  # type: ignore
+    if (addDescriptionPlaceholder):
+        add_description_property(schema)  # type: ignore
 
     if (useAnnotations):
         schema["title"] = TITLE
