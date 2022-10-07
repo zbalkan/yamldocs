@@ -140,3 +140,4 @@ pyvenv.cfg
 /out
 launch.json
 *.db
+.vscode
