@@ -22,7 +22,7 @@ def main() -> None:
 
 def generate_docs(inputPath: str, outputPath: str, verbose: bool = False) -> None:
     config: GenerationConfiguration = GenerationConfiguration(
-        copy_css=False, expand_buttons=True, description_is_markdown=False)
+        copy_css=False, expand_buttons=True, description_is_markdown=True)
 
     generate_from_filename(inputPath, outputPath, config=config)
 
@@ -59,7 +59,7 @@ def generate_json_schema(inputPath: str, outputPath: str, useAnnotations: bool =
 
 def add_description_property(d: dict) -> None:
     if ("type" in d):
-        d["description"] = "Description placeholder"
+        d["description"] = "# Description title\n\nDescription placeholder with *bold* and _italic_ text. This is a `code snippet`."
     for key, value in d.items():
         if (type(value) == dict):
             add_description_property(value)
