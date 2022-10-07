@@ -44,17 +44,25 @@ def generate_json_schema(inputPath: str, outputPath: str, useAnnotations: bool =
     builder.add_object(jsonObj)
     schema: dict = builder.to_schema()
 
+    add_description_property(schema)  # type: ignore
+
     if (useAnnotations):
         schema["title"] = TITLE
         schema["description"] = DESCRIPTION
-
-    
 
     with open(outputPath, 'w') as json_file:
         json.dump(schema, json_file, indent=4)
 
     if (verbose):
         print("Saved schema to path: " + outputPath)
+
+
+def add_description_property(d: dict) -> None:
+    if ("type" in d):
+        d["description"] = "Description placeholder"
+    for key, value in d.items():
+        if (type(value) == dict):
+            add_description_property(value)
 
 
 def yml_to_json(inputPath: str, outputPath: str, verbose: bool = False) -> None:
