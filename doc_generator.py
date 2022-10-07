@@ -17,7 +17,7 @@ from configuration import CONFIG_JSON, CONFIG_YML, DOCS_PATH, SCHEMA_PATH, USE_A
 
 def main() -> None:
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
-        description="Generate documentation for yaml.")
+        description="Generate HTML documentation for YAML files.")
     if (len(sys.argv)) == 1:
         parser.print_help()
 
@@ -35,7 +35,7 @@ def main() -> None:
                         dest="docs",
                         action='store_true',
                         required=False,
-                        help="Generates docs from schema.")
+                        help="Generates documentation from schema.")
 
     args: argparse.Namespace = parser.parse_args()
 

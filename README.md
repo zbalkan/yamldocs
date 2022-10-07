@@ -12,8 +12,20 @@ The `defaults.yml` file used as an example is extracted from OpenSearch configur
 * Copy the YAML file under `docs/` directory.
 * Update `configuration.py` based on your requirements.
 * Run `pip install -r requirements.txt`
-* Run `python3 doc_generator.py`
+* Run `python3 doc_generator.py -h` to get help.
 * PROFIT
+
+```bash
+usage: doc_generator.py [-h] [-p] [-s] [-d]
+
+Generate HTML documentation for YAML files.
+
+options:
+  -h, --help     show this help message and exit
+  -p, --preview  Generates documentation from YAML with description placeholders.
+  -s, --schema   Generates schema from YAML with description placeholders.
+  -d, --docs     Generates documentation from schema.
+```
 
 ## Generated docs
 
