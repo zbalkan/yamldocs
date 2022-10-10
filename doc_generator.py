@@ -12,7 +12,8 @@ from json_schema_for_humans.generate import generate_from_filename
 from json_schema_for_humans.generation_configuration import GenerationConfiguration
 
 from annotations import DESCRIPTION, TITLE
-from configuration import CONFIG_JSON, CONFIG_YML, DOCS_PATH, SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE, DESCRIPTION_PLACEHOLDER
+from configuration import (CONFIG_JSON, CONFIG_YML, DESCRIPTION_PLACEHOLDER,
+                           DOCS_PATH, SCHEMA_PATH, USE_ANNOTATIONS, VERBOSE)
 
 
 def main() -> None:
@@ -42,7 +43,7 @@ def main() -> None:
     if (args.preview is True or args.schema is True):
         yml_to_json(CONFIG_YML, CONFIG_JSON, VERBOSE)
 
-        addDescriptionPlaceholder : bool = (args.preview is True)
+        addDescriptionPlaceholder: bool = (args.preview is True)
 
         generate_json_schema(CONFIG_JSON,
                              SCHEMA_PATH, addDescriptionPlaceholder, USE_ANNOTATIONS, VERBOSE)
@@ -61,7 +62,7 @@ def generate_docs(inputPath: str, outputPath: str, verbose: bool = False) -> Non
         print("Saved docs to path: " + outputPath)
 
 
-def generate_json_schema(inputPath: str, outputPath: str, addDescriptionPlaceholder : bool = False, useAnnotations: bool = False, verbose: bool = False) -> None:
+def generate_json_schema(inputPath: str, outputPath: str, addDescriptionPlaceholder: bool = False, useAnnotations: bool = False, verbose: bool = False) -> None:
 
     if (verbose):
         print("Loading JSON file from path: " + inputPath)
