@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 
-CONFIG_YML: str = "./config/defaults.yml"
-CONFIG_JSON: str = "./config/defaults.json"
+CONFIG_YML: str = "./input/defaults.yml"
+CONFIG_JSON: str = "./input/defaults.json"
 SCHEMA_PATH: str = "./schema/defaults.schema.json"
-DOCS_PATH: str = "./docs/defaults.html"
+DOCS_PATH: str = "./output/defaults.html"
 VERBOSE: bool = True
 USE_ANNOTATIONS: bool = True
 

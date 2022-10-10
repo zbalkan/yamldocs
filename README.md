@@ -9,7 +9,7 @@ The `defaults.yml` file used as an example is extracted from OpenSearch configur
 ## Usage
 
 * Run `git clone https://github.com/zbalkan/yaml-docs.git` to clone the repository.
-* Copy the YAML file under `docs/` directory.
+* Copy the YAML file under `input/` directory or any other place if you change the `configuration.py`.
 * Update `configuration.py` based on your requirements.
 * Run `pip install -r requirements.txt`
 * Run `python3 doc_generator.py -h` to get help.
@@ -29,7 +29,7 @@ options:
 
 ## Generated docs
 
-The documentation is under `./docs` directory. Under screenshots, ou can get both partial and full views.
+The documentation is under `./output` directory. Under screenshots, ou can get both partial and full views.
 
 The script keeps generated JSON schema on disk in case you want to utilize it for any kind of reason, like schema validation for your YAML file.
 
