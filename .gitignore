@@ -141,3 +141,5 @@ pyvenv.cfg
 launch.json
 *.db
 .vscode
+yamldocs/output/*
+yamldocs/schema/*
